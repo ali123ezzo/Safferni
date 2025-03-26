@@ -26,6 +26,7 @@ class User(models.Model):
    
    user_id = models.IntegerField(primary_key=True)
    user_name = models.CharField(max_length=100)
+   user_email = models.EmailField(max_length=200, unique=True, default=None)
    password = models.CharField(max_length=200)
    first_name = models.CharField(max_length=100)    
    last_name = models.CharField(max_length=100)
