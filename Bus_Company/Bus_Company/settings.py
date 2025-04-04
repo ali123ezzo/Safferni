@@ -37,16 +37,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'UserAuth',
+
+    #rest_framework
     'rest_framework',
     'rest_framework.authtoken',
-]
 
-# AUTH_USER_MODEL = 'BusCompany.User'
+    #apps
+    'UserAuthAPI',
+
+    #phone field
+    'phonenumber_field',
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -127,3 +131,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'UserAuthAPI.User'
