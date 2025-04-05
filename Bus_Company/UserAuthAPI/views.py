@@ -39,7 +39,7 @@ def get_user_detail(request, pk):
 def api_overview(request):
      
 	api_urls = {
-        'api url over view' : '//',
+        'api url over view' : '/',
 		'register a user':'/signup/',
 		'sign in':'/signin/',
 		'sign out':'/signout/',
