@@ -1,4 +1,3 @@
-from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
@@ -28,14 +27,13 @@ def api_overview(request):
      
 	api_urls = {
 
-        'auth_api' : '/',
-		'logout' : '/auth/logout/',
-		'login' : '/get_users/',
+        'auth api overview' : '/',
+		'logout' : '/logout/',
+		'login' : '/login/',
 		'register' : '/register/',
-        'login or register' : '/auth/',
 		'get authenticated user' : '/user/',
-        'get and add users only by admins' : '/get_add_user/',
-        'get and add users by id only by admins' : '/get_add_user/<str:pk>/',
+        'get and add users only by admins' : '/get_add_users/',
+        'get and add users by id only by admins' : '/get_update_delete_user/<str:pk>/',
 		}
 
 	return Response(api_urls)
@@ -194,14 +192,6 @@ class LogoutView(APIView):
             )
 
 
-@api_view(['POST'])
-def logout(request):
-
-    logout(request)
-    return redirect('login')
-
-
-
 class UserListCreateAPIView(generics.ListCreateAPIView):
 
     queryset = User.objects.all()
@@ -237,123 +227,4 @@ class UserDetailView(APIView):
     def get(self, request):
         serializer = UserRegistrationSerializer(request.user)
         return Response(serializer.data)
-  
-# class LoginRegisterView(APIView):
-#     """
-#     Handles both registration and login
-#     """
-#     permission_classes = [AllowAny]
-    
-#     def post(self, request, *args, **kwargs):
-#         action = request.data.get('action')
-        
-#         if action == 'register':
-#             return self._handle_registration(request)
-#         elif action == 'login':
-#             return self._handle_login(request)
-#         else:
-#             return Response(
-#                 {'error': 'Action not recognized'}, 
-#                 status=status.HTTP_400_BAD_REQUEST
-#             )
-    
-#     def _handle_registration(self, request):
-#         serializer = UserCreateSerializer(data=request.data)
-#         if serializer.is_valid():
-#             user = serializer.save()
-            
-#             if user:
-#                 # Generate tokens
-#                 refresh = RefreshToken.for_user(user)
-#                 csrf_token = get_token(request)
-                
-#                 response_data = {
-#                     'user': UserSerializer(user).data,
-#                     'refresh': str(refresh),
-#                     'access': str(refresh.access_token),
-#                 }
-                
-#                 response = Response(response_data, status=status.HTTP_201_CREATED)
-                
-#                 # Set secure cookies if in production
-#                 if not settings.DEBUG:
-#                     self._set_secure_cookies(response, refresh, csrf_token)
-                
-#                 return response
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-#     def _handle_login(self, request):
-#         username = request.data.get('username')
-#         password = request.data.get('password')
-        
-#         user = authenticate(username=username, password=password)
-        
-#         if user:
-#             refresh = RefreshToken.for_user(user)
-#             csrf_token = get_token(request)
-            
-#             response_data = {
-#                 'user': UserSerializer(user).data,
-#                 'refresh': str(refresh),
-#                 'access': str(refresh.access_token),
-#             }
-            
-#             response = Response(response_data, status=status.HTTP_200_OK)
-            
-#             # Set secure cookies if in production
-#             if not settings.DEBUG:
-#                 self._set_secure_cookies(response, refresh, csrf_token)
-            
-#             return response
-        
-#         return Response(
-#             {'error': 'Invalid credentials'}, 
-#             status=status.HTTP_401_UNAUTHORIZED
-#         )
-    
-#     def _set_secure_cookies(self, response, refresh_token, csrf_token):
-#         response.set_cookie(
-#             key=settings.SIMPLE_JWT['AUTH_COOKIE'],
-#             value=str(refresh_token.access_token),
-#             expires=settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
-#             secure=True,
-#             httponly=True,
-#             samesite='Strict',
-#             path=settings.SIMPLE_JWT['AUTH_COOKIE_PATH']
-#         )
-#         response.set_cookie(
-#             key='X-CSRFToken',
-#             value=csrf_token,
-#             secure=True,
-#             httponly=False,  # JavaScript needs to read this
-#             samesite='Strict'
-#         )
-
-
-# @api_view(['POST'])
-# def signup(request):
-
-#     serializer = UserSerializer(data=request.data)
-#     if serializer.is_valid():
-#         serializer.save()
-#         user = User.objects.get(username=request.data['username'])
-#         user.set_password(request.data['password'])
-#         user.save()
-#         token = Token.objects.create(user=user)
-#         return Response({'token': token.key, 'user': serializer.data})
-#     return Response(serializer.errors, status=status.HTTP_200_OK)
-
-
-# # normal user login
-# @api_view(['POST'])
-# def login(request):
-
-#     user = get_object_or_404(User, username=request.data['username'])
-#     if not user.check_password(request.data['password']):
-#         return Response("missing user", status=status.HTTP_404_NOT_FOUND)
-#     token, created = Token.objects.get_or_create(user=user)
-#     serializer = UserSerializer(user)
-#     return Response({'token': token.key, 'user': serializer.data})
-
-
 

@@ -5,14 +5,14 @@ from . import views
 urlpatterns = [
 
     path('', views.api_overview, name='crud_auth_overview'),
-    path('get_add_user/', views.UserListCreateAPIView.as_view(), name='get_add_user'),
-    path('get_add_user/<int:id>/', views.UserDetailAPIView.as_view(), name='get_add_user_id'),
-    path('user/', views.UserDetailView.as_view(), name='user-detail'),
+    path('get_add_users/', views.UserListCreateAPIView.as_view(), name='get_add_users'),
+    path('get_update_delete_user/<int:id>/', views.UserDetailAPIView.as_view(), name='get_update_delete_user_id'),
+    path('user/', views.UserDetailView.as_view(), name='user_detail'),
     path('register/', views.RegistrationView.as_view(), name='register'),
     path('login/', views.LoginView.as_view(), name='login'),
     path('logout/', views.LogoutView.as_view(), name='auth_logout'),
-    path('logout_instantly/', views.logout, name='logout'),
 
+    # path('logout_instantly/', views.logout, name='logout'),
     # path('auth/', views.LoginRegisterView.as_view(), name='auth'),
     # path('signup/', views.signup, name='signup'),
     # path('signin/', views.login, name='signin'),
