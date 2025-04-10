@@ -21,6 +21,4 @@ urlpatterns = [
     
     path('admin/', admin.site.urls),
     path('auth_api/', include('UserAuthAPI.urls')),
-    path('CRUD-company_api/', include('CRUDComapnyAPI.urls')),
-    path('CRUD-company_api/', include('CRUDBusAPI.urls')),
 ]

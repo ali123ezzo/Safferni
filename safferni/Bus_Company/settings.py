@@ -47,8 +47,6 @@ INSTALLED_APPS = [
 
     #apps
     'UserAuthAPI',
-    'CRUDComapnyAPI',
-    'CRUDBusAPI',
 
     #phone field
     'phonenumber_field',
