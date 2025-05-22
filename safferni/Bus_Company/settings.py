@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     #apps
     'UserAuthAPI',
+    'booking',
 
     #phone field
     'phonenumber_field',
